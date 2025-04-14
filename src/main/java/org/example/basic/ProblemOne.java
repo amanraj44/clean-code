@@ -2,29 +2,30 @@ package org.example.basic;
 
 import java.time.LocalDate;
 
-public class ProblemOne {
-
+public class EdibleItem {
     private LocalDate expirationDate;
-    private Boolean approvedForConsumption;
+    private Boolean isApprovedForConsumption;
     private Integer inspectorId;
 
-    public ProblemOne(LocalDate expirationDate, Boolean approvedForConsumption, Integer inspectorId) {
+    public EdibleItem(LocalDate expirationDate, Boolean isApprovedForConsumption, Integer inspectorId) {
         this.expirationDate = expirationDate;
-        this.approvedForConsumption = approvedForConsumption;
+        this.isApprovedForConsumption = isApprovedForConsumption;
         this.inspectorId = inspectorId;
     }
 
-    public boolean isEdible()
-    {
-        if (this.expirationDate.isAfter(LocalDate.now()) &&
-                this.approvedForConsumption == true &&
-                this.inspectorId != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public boolean isEdible() {
+        return isNotExpired() && isApproved() && hasInspector();
+    }
+
+    private boolean isNotExpired() {
+        return this.expirationDate.isAfter(LocalDate.now());
+    }
+
+    private boolean isApproved() {
+        return this.isApprovedForConsumption.equals(Boolean.TRUE);
+    }
+
+    private boolean hasInspector() {
+        return this.inspectorId != null;
     }
 }
